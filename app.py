@@ -2,13 +2,15 @@ import streamlit as st
 import pandas as pd
 from streamlit_autorefresh import st_autorefresh
 
+# Page setup
+st.set_page_config(page_title="Agent Stats Dashboard", layout="wide")
+
 # Auto refresh every 15 seconds
 st_autorefresh(interval=15000)
 
-st.set_page_config(page_title="Agent Stats", layout="wide")
-
-# Your OneDrive Excel link
+# OneDrive Excel link (direct download)
 excel_url = "https://1drv.ms/x/c/12682cf798395550/IQAAUmahz2yiSKQ9IpOs8sx_AXYbZCRX0mOmM3yrKgVDEhg?download=1"
+
 
 def calculate_stats(df):
 
@@ -23,6 +25,8 @@ def show_dashboard(df):
 
     st.title("📺 Agent Performance Dashboard")
 
+    df = df.fillna(0)
+
     agents = df.to_dict("records")
 
     cards_per_row = 4
@@ -31,7 +35,7 @@ def show_dashboard(df):
 
         cols = st.columns(cards_per_row)
 
-        for col, agent in zip(cols, agents[i:i+cards_per_row]):
+        for col, agent in zip(cols, agents[i:i + cards_per_row]):
 
             with col:
 
