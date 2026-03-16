@@ -2,13 +2,13 @@ import streamlit as st
 import pandas as pd
 from streamlit_autorefresh import st_autorefresh
 
-REFRESH_INTERVAL = 15000
+# Auto refresh every 15 seconds
+st_autorefresh(interval=15000)
 
 st.set_page_config(page_title="Agent Stats", layout="wide")
 
-# Auto refresh
-st_autorefresh(interval=REFRESH_INTERVAL)
-
+# Your OneDrive Excel link
+excel_url = "https://1drv.ms/x/c/12682cf798395550/IQAAUmahz2yiSKQ9IpOs8sx_AXYbZCRX0mOmM3yrKgVDEhg?download=1"
 
 def calculate_stats(df):
 
@@ -19,11 +19,9 @@ def calculate_stats(df):
     return df
 
 
-def show_leaderboard(df):
+def show_dashboard(df):
 
-    st.title("📊 Agent Stats Dashboard")
-
-    df = df.fillna(0)
+    st.title("📺 Agent Performance Dashboard")
 
     agents = df.to_dict("records")
 
@@ -81,11 +79,12 @@ background:white;
 
 try:
 
-    df = pd.read_excel("Agent_Dashboard.xlsx")
+    # Load Excel from OneDrive
+    df = pd.read_excel(excel_url)
 
     df = calculate_stats(df)
 
-    show_leaderboard(df)
+    show_dashboard(df)
 
 except Exception as e:
 
